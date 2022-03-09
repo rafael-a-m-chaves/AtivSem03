@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F0D339C1-AFF5-4E9F-B6A8-ED328D546205}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
+		ScriptsBancoDeDados.sql = ScriptsBancoDeDados.sql
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Agenda.Application", "Agendas.Application\Agenda.Application.csproj", "{0F1F83EC-199E-4288-A9C6-F9BAE9CF1F9E}"
