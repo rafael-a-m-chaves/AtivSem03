@@ -21,13 +21,22 @@ namespace Agenda.WebApplication.Controllers
         {
             IEnumerable<Agendas> agendas;
             agendas = service.Get().ToList();
-            return View();
+            return View(agendas);
         }
 
         // GET: AgendaController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Agendas agendas = service.FindById(id);
+            if(agendas != null)
+            {
+                return View(agendas);
+            }
+            else
+            {
+                return Index();
+            }
+            
         }
 
         // GET: AgendaController/Create
@@ -54,7 +63,15 @@ namespace Agenda.WebApplication.Controllers
         // GET: AgendaController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Agendas agendas = service.FindById(id);
+            if (agendas != null)
+            {
+                return View(agendas);
+            }
+            else
+            {
+                return Index();
+            }
         }
 
         // POST: AgendaController/Edit/5
@@ -75,7 +92,15 @@ namespace Agenda.WebApplication.Controllers
         // GET: AgendaController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Agendas agendas = service.FindById(id);
+            if (agendas != null)
+            {
+                return View(agendas);
+            }
+            else
+            {
+                return Index();
+            }
         }
 
         // POST: AgendaController/Delete/5
@@ -85,6 +110,11 @@ namespace Agenda.WebApplication.Controllers
         {
             try
             {
+                Agendas agendas = service.FindById(id);
+                if (agendas != null)
+                {
+                    service.Delete(agendas);
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch

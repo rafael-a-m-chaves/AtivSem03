@@ -28,7 +28,16 @@ namespace Agenda.WebApplication.Controllers
         // GET: ClienteController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Cliente cliente = service.FindById(id);
+            if (cliente != null)
+            {
+                return View(cliente);
+            }
+            else
+            {
+                return Index();
+            }
+            
         }
 
         // GET: ClienteController/Create
@@ -44,6 +53,8 @@ namespace Agenda.WebApplication.Controllers
         {
             try
             {
+                Cliente cliente = new Cliente();
+                
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -55,7 +66,15 @@ namespace Agenda.WebApplication.Controllers
         // GET: ClienteController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Cliente cliente = service.FindById(id);
+            if (cliente != null)
+            {
+                return View(cliente);
+            }
+            else
+            {
+                return Index();
+            }
         }
 
         // POST: ClienteController/Edit/5
@@ -76,7 +95,15 @@ namespace Agenda.WebApplication.Controllers
         // GET: ClienteController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Cliente cliente = service.FindById(id);
+            if (cliente != null)
+            {
+                return View(cliente);
+            }
+            else
+            {
+                return Index();
+            }
         }
 
         // POST: ClienteController/Delete/5
@@ -86,6 +113,11 @@ namespace Agenda.WebApplication.Controllers
         {
             try
             {
+                Cliente cliente = service.FindById(id);
+                if (cliente != null)
+                {
+                    service.Delete(cliente);
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch
