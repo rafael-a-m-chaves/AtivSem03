@@ -7,26 +7,22 @@ using Agenda.Infrastruct.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 using System;
 using Agenda.WebApplication.Configs;
-
+using Agenda.Application.Services;
+using Agenda.Application.IServices;
+using Agenda.Infrastruct.Repository;
+using Agenda.Infrastruct.IRepository;
 
 namespace Agenda.WebApplication
 {
     public class Startup
     {
-        public Startup(Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
+        public Startup(IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder()
-               .SetBasePath(env.ContentRootPath)
-               .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-               .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-               .AddEnvironmentVariables();
-
-            Configuration = builder.Build();
+            Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -46,20 +42,17 @@ namespace Agenda.WebApplication
                 options.SupportedCultures = new List<CultureInfo> { new CultureInfo("pt-BR"), new CultureInfo("pt-BR") };
             });
 
+            //Mapeando os services e repositorys
+            services.AddTransient<IAgendaService, AgendaService>();
+            services.AddTransient<IClienteService, ClienteService>();
+            services.AddTransient<IProcedimentoService, ProcedimentoService>();
 
-            var tokenConfigurations = new TokenConfiguration();
-            new ConfigureFromConfigurationOptions<TokenConfiguration>(
-                Configuration.GetSection("TokenConfiguration"))
-                    .Configure(tokenConfigurations);
-            services.AddSingleton(tokenConfigurations);
+            services.AddTransient<IAgendaRepository, AgendaRepository>();
+            services.AddTransient<IClienteRepository, ClienteRepository>();
+            services.AddTransient<IProcedimentoRepository, ProcedimentoRepository>();
 
             services.AddMvc();
             services.AddCors();
-
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("Admin", policy => policy.RequireClaim("grupo", "Admin"));
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -88,43 +81,6 @@ namespace Agenda.WebApplication
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-        }
-
-        private void ConfigurarTokenJWT(IServiceCollection services)
-        {
-            var tokenConfigurations = new TokenConfiguration();
-            new ConfigureFromConfigurationOptions<TokenConfiguration>(
-                Configuration.GetSection("TokenConfiguration"))
-                .Configure(tokenConfigurations);
-
-            services.AddSingleton(tokenConfigurations);
-
-            var signingConfigurations = new SigningConfiguration(tokenConfigurations);
-            services.AddSingleton(signingConfigurations);
-
-            services.AddAuthentication(authOptions =>
-            {
-                authOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                authOptions.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(bearerOptions =>
-            {
-                var paramsValidation = bearerOptions.TokenValidationParameters;
-                paramsValidation.IssuerSigningKey = signingConfigurations.Key;
-                paramsValidation.ValidAudience = tokenConfigurations.Audience;
-                paramsValidation.ValidIssuer = tokenConfigurations.Issuer;
-                paramsValidation.ValidateIssuerSigningKey = true;
-                paramsValidation.ValidateLifetime = true;
-                paramsValidation.ClockSkew = TimeSpan.Zero;
-            });
-
-            services.AddAuthorization(auth =>
-            {
-                auth.DefaultPolicy = new AuthorizationPolicyBuilder()
-                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
-                    .RequireAuthenticatedUser()
-                    .Build();
-            });
-
         }
     }
 }

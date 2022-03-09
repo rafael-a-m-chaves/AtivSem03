@@ -14,6 +14,7 @@ namespace Agenda.Infrastruct.Mapping
             builder.HasOne(r => r.Procedimento)
                 .WithMany()
                 .HasForeignKey(x => x.IdProcedimento);
+            builder.Property(r => r.DataAgendamento);
         }
     }
 }

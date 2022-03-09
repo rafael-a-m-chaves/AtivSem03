@@ -1,15 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Agenda.Domain.Entity;
 using Agenda.Infrastruct.Mapping;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Agenda.Infrastruct.Context
 {
-    public class AgendaContext : DbContext
+    public class AgendaContext : IdentityDbContext
     {
         public AgendaContext(DbContextOptions<AgendaContext> options) : base(options)
         { 
         }
-        public DbSet<Agendas> Agenda { get; set; }
+        public AgendaContext()
+        {
+        }
+        public DbSet<Agendas> Agendas { get; set; }
         public DbSet<Cliente> Cliente { get; set; }
         public DbSet<Procedimento> Procedimento { get; set; }
 

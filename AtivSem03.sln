@@ -10,11 +10,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agenda.Application", "Agendas.Application\Agenda.Application.csproj", "{0F1F83EC-199E-4288-A9C6-F9BAE9CF1F9E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Agenda.Application", "Agendas.Application\Agenda.Application.csproj", "{0F1F83EC-199E-4288-A9C6-F9BAE9CF1F9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agenda.Infrastruct", "Agenda.Infrastruct\Agenda.Infrastruct.csproj", "{A7012A80-BD84-42C5-B36E-370E2E07567A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Agenda.Infrastruct", "Agenda.Infrastruct\Agenda.Infrastruct.csproj", "{A7012A80-BD84-42C5-B36E-370E2E07567A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agenda.Domain", "Agenda.Domain\Agenda.Domain.csproj", "{0641CDB0-B7F2-4BD2-B99C-191344905A41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Agenda.Domain", "Agenda.Domain\Agenda.Domain.csproj", "{0641CDB0-B7F2-4BD2-B99C-191344905A41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

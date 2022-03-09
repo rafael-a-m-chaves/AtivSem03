@@ -1,4 +1,6 @@
-﻿namespace Agenda.Domain.Entity
+﻿using System;
+
+namespace Agenda.Domain.Entity
 {
     public class Agendas
     {
@@ -8,6 +10,7 @@
         public Procedimento Procedimento { get; set; }
         public int IdProcedimento { get; set; }
         public bool Realizado { get; set; }
+        public DateTime DataAgendamento { get; set; }
 
     }
 }
