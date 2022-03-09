@@ -2,6 +2,7 @@
 using Agenda.Domain.Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -28,7 +29,15 @@ namespace Agenda.WebApplication.Controllers
         // GET: ProcedimentoController1/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Procedimento procedimento = service.FindById(id);
+            if(procedimento != null)
+            {
+                return View(procedimento);
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         // GET: ProcedimentoController1/Create
@@ -44,6 +53,11 @@ namespace Agenda.WebApplication.Controllers
         {
             try
             {
+                Procedimento procedimento = new Procedimento();
+                procedimento.Id = 0;
+                procedimento.NomeProcedimento = collection["NomeProcedimento"];
+                procedimento.Valor = Convert.ToDecimal(collection["Valor"]);
+                service.Save(procedimento);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -55,7 +69,15 @@ namespace Agenda.WebApplication.Controllers
         // GET: ProcedimentoController1/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Procedimento procedimento = service.FindById(id);
+            if (procedimento != null)
+            {
+                return View(procedimento);
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         // POST: ProcedimentoController1/Edit/5
@@ -65,6 +87,11 @@ namespace Agenda.WebApplication.Controllers
         {
             try
             {
+                Procedimento procedimento = new Procedimento();
+                procedimento.Id = id;
+                procedimento.NomeProcedimento = collection["NomeProcedimento"];
+                procedimento.Valor = Convert.ToDecimal(collection["Valor"]);
+                service.Save(procedimento);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -76,6 +103,15 @@ namespace Agenda.WebApplication.Controllers
         // GET: ProcedimentoController1/Delete/5
         public ActionResult Delete(int id)
         {
+            Procedimento procedimento = service.FindById(id);
+            if (procedimento != null)
+            {
+                return View(procedimento);
+            }
+            else
+            {
+                RedirectToAction(nameof(Index));
+            }
             return View();
         }
 
@@ -86,6 +122,11 @@ namespace Agenda.WebApplication.Controllers
         {
             try
             {
+                Procedimento procedimento = service.FindById(id);
+                if (procedimento != null)
+                {
+                    service.Delete(procedimento);
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch

@@ -35,7 +35,7 @@ namespace Agenda.WebApplication.Controllers
             }
             else
             {
-                return Index();
+                return RedirectToAction(nameof(Index));
             }
             
         }
@@ -54,7 +54,10 @@ namespace Agenda.WebApplication.Controllers
             try
             {
                 Cliente cliente = new Cliente();
-                
+                cliente.Nome = collection["Nome"];
+                cliente.Telefone = collection["Telefone"];
+                cliente.Id = 0; // para definir que sera um novo cliente
+                service.Save(cliente);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -73,7 +76,7 @@ namespace Agenda.WebApplication.Controllers
             }
             else
             {
-                return Index();
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -84,6 +87,11 @@ namespace Agenda.WebApplication.Controllers
         {
             try
             {
+                Cliente cliente = new Cliente();
+                cliente.Nome = collection["Nome"];
+                cliente.Telefone = collection["Telefone"];
+                cliente.Id = id; // para definir que sera um novo cliente
+                service.Save(cliente);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -102,7 +110,7 @@ namespace Agenda.WebApplication.Controllers
             }
             else
             {
-                return Index();
+                return RedirectToAction(nameof(Index));
             }
         }
 

@@ -2,6 +2,7 @@
 using Agenda.Domain.Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -34,7 +35,7 @@ namespace Agenda.WebApplication.Controllers
             }
             else
             {
-                return Index();
+                return RedirectToAction(nameof(Index));
             }
             
         }
@@ -52,6 +53,13 @@ namespace Agenda.WebApplication.Controllers
         {
             try
             {
+                Agendas agendas = new Agendas();
+                agendas.Id = 0;
+                agendas.IdCliente = Convert.ToInt32(collection["IdCliente"]);
+                agendas.IdProcedimento = Convert.ToInt32(collection["IdProcedimento"]);
+                agendas.DataAgendamento = Convert.ToDateTime(collection["DataAgendamento"]);
+                agendas.Realizado = Convert.ToBoolean(collection["Realizado"]);
+                service.Save(agendas);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -70,7 +78,7 @@ namespace Agenda.WebApplication.Controllers
             }
             else
             {
-                return Index();
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -81,6 +89,11 @@ namespace Agenda.WebApplication.Controllers
         {
             try
             {
+                Agendas agendas = new Agendas();
+                agendas.Id = id;
+                agendas.DataAgendamento = Convert.ToDateTime(collection["DataAgendamento"]);
+                agendas.Realizado = Convert.ToBoolean(collection["Realizado"]);
+                service.Save(agendas);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -99,7 +112,7 @@ namespace Agenda.WebApplication.Controllers
             }
             else
             {
-                return Index();
+                return RedirectToAction(nameof(Index));
             }
         }
 
