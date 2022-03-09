@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Agenda.Domain.Entity;
 
-namespace Agenda.Domain.Entity
+namespace Agenda.WebApplication.Models
 {
     public class Agendas
     {
@@ -11,12 +12,12 @@ namespace Agenda.Domain.Entity
         public Procedimento Procedimento { get; set; }
         public int IdProcedimento { get; set; }
         public bool Realizado { get; set; }
-        public DateTime DataAgendamento { get; set; }
+        public DateTime? DataAgendamento { get; set; }
 
 
         //para preencher o select na hora de criar nova agenda
 
-        //public List<Cliente> ClienteList { get; set; }
-        //public List <Procedimento> ProcedimentoList { get; set; }
+        public List<Cliente> ClienteList { get; set; }
+        public List <Procedimento> ProcedimentoList { get; set; }
     }
 }

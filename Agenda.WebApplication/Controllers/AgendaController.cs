@@ -2,6 +2,7 @@
 using Agenda.Domain.Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,14 @@ namespace Agenda.WebApplication.Controllers
     {
         // criando o a injeção de dependencia do service na controller
         private readonly IAgendaService service;
-        public AgendaController(IAgendaService agendaService) : base() 
+        private readonly IClienteService clienteService;
+        private readonly IProcedimentoService procedimentoService;
+        public AgendaController(IAgendaService agendaService, 
+            IClienteService _clienteService, IProcedimentoService _procedimentoService) : base() 
         {
             service = agendaService;
+            clienteService = _clienteService;
+            procedimentoService = _procedimentoService; 
         }
 
         // GET: AgendaController
@@ -43,7 +49,13 @@ namespace Agenda.WebApplication.Controllers
         // GET: AgendaController/Create
         public ActionResult Create()
         {
-            return View();
+            var clientes = clienteService.Get().ToList();
+            var procedimentos = procedimentoService.Get().ToList();
+
+            Models.Agendas agendas = new Models.Agendas(); //Usado outro objeto para evitar conflitos no bd
+            agendas.ProcedimentoList = procedimentos;
+            agendas.ClienteList = clientes;
+            return View(agendas);
         }
 
         // POST: AgendaController/Create
@@ -64,7 +76,13 @@ namespace Agenda.WebApplication.Controllers
             }
             catch
             {
-                return View();
+                var clientes = clienteService.Get().ToList();
+                var procedimentos = procedimentoService.Get().ToList();
+
+                Models.Agendas agendas = new Models.Agendas(); //Usado outro objeto para evitar conflitos no bd
+                agendas.ProcedimentoList = procedimentos;
+                agendas.ClienteList = clientes;
+                return View(agendas);
             }
         }
 

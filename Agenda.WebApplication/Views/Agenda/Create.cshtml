@@ -1,46 +1,56 @@
-﻿@model Agenda.Domain.Entity.Agendas
+﻿@model Agenda.WebApplication.Models.Agendas
 
-@{
-    ViewData["Title"] = "Create";
-}
+    @{
+        ViewData["Title"] = "Create";
+    }
 
-<h1>Create</h1>
+    <h1>Create</h1>
 
-<h4>Agendas</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="IdCliente" class="control-label"></label>
-                <select asp-for="IdCliente" class ="form-control" asp-items="ViewBag.IdCliente"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdProcedimento" class="control-label"></label>
-                <select asp-for="IdProcedimento" class ="form-control" asp-items="ViewBag.IdProcedimento"></select>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Realizado" /> @Html.DisplayNameFor(model => model.Realizado)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataAgendamento" class="control-label"></label>
-                <input asp-for="DataAgendamento" class="form-control" />
-                <span asp-validation-for="DataAgendamento" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+    <h4>Agendas</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="IdCliente" class="control-label"></label>
+                    <select asp-for="IdCliente" class="form-control">
+                        @foreach (var item in Model.ClienteList)
+                             {
+                        <option value="@item.Id">@Html.DisplayFor(modelItem => item.Nome)</option>
+                             }
+                        </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdProcedimento" class="control-label"></label>
+                    <select asp-for="IdProcedimento" class="form-control">
+                        @foreach (var item in Model.ProcedimentoList)
+                        {
+                        <option value="@item.Id">@Html.DisplayFor(modelItem => item.NomeProcedimento)</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Realizado" /> @Html.DisplayNameFor(model => model.Realizado)
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DataAgendamento" class="control-label"></label>
+                    <input asp-for="DataAgendamento" class="form-control" />
+                    <span asp-validation-for="DataAgendamento" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
